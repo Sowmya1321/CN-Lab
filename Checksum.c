@@ -2,7 +2,7 @@
 #include<string.h>
 unsigned char calculate_checksum(const char*data)
 {
-	unsigned char sum=0;
+	unsigned int sum=0;
 	for(int i=0;data[i]!='\0';i++)
 	{
 		sum +=(unsigned char)data[i];
@@ -21,7 +21,7 @@ void send_frame(const char *data, unsigned char *frame, int *frame_len)
 }
 int receive_frame(const unsigned char *frame, int frame_len, char *out_data)
 {
-	if(frame[0]!=0X7E || frame[frame_len-1]!=0X7E)
+	if(frame[0]!=0X7E || frame[frame_len-1]!=0X7F)
 	{
 		printf("Frame error: Invalid framing bytes.\n");
 		return 0;
@@ -47,7 +47,7 @@ int main()
 	printf("Enter data to send:");
 	scanf("%s", data);
 	send_frame(data,frame,&frame_len);						
-	printf("Transmitted Frame(in hex):");
+	printf( "Transmitted Frame (in hex) : ");
 	for(int i=0;i<frame_len;i++)
 		printf("%02X", frame[i]);
 	printf("\n");
@@ -58,3 +58,11 @@ int main()
 	}
 	return 0;
 }				
+
+
+//OUTPUT:
+Enter data to send: HELLO
+Transmitted Frame (in hex) : 7E48454C4C4F747F
+Received data: HELLO
+No error detected in frame.
+
