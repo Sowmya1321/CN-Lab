@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<string.h>
 int main()
@@ -9,9 +10,9 @@ int main()
 	printf("Enter the data to be stuffed:\n");
 	scanf("%s",input);
 	printf("Enter the starting delimiter character:\n");
-	scanf("%c", &start_delim);
+	scanf(" %c", &start_delim);
 	printf("Enter the ending delimiter character:\n");
-	scanf("%c",&end_delim);
+	scanf(" %c",&end_delim);
 	double_start[0] = double_start[1] = start_delim;
 	double_start[2] = '\0';
 	double_end[0] = double_end[1] = end_delim;
@@ -32,3 +33,14 @@ int main()
 	printf("Data after character stuffing: %s\n", stuffed);
 	return 0;
 }			
+
+
+//OUTPUT:
+Enter the data to be stuffed:
+goodaday
+Enter the starting delimiter character:
+d
+Enter the ending delimiter character:
+g
+Data after character stuffing: ddggooddaddaygg
+
