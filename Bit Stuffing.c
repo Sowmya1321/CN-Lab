@@ -28,3 +28,7 @@ int main()
 	printf("Bit-stuffed output: %s\n", stuffed);
 	return 0;
 }						
+
+//OUTPUT:
+Enter the bit stream (only 0s and 1s):0111111011
+Bit-stuffed output: 01111101011
