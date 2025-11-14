@@ -1,0 +1,65 @@
+#include <stdio.h>
+
+// Generate Hamming code (7,4)
+void generateHammingCode(int d[], int h[]) {
+    h[2] = d[0];
+    h[4] = d[1];
+    h[5] = d[2];
+    h[6] = d[3];
+
+    // Even parity bits
+    h[0] = h[2] ^ h[4] ^ h[6];   // P1
+    h[1] = h[2] ^ h[5] ^ h[6];   // P2
+    h[3] = h[4] ^ h[5] ^ h[6];   // P4
+}
+
+int main() {
+    int d[4], h[7];
+    printf("Enter 4 data bits: ");
+    for(int i = 0; i < 4; i++)
+        scanf("%d", &d[i]);
+
+    generateHammingCode(d, h);
+
+    printf("Hamming code: ");
+    for(int i = 0; i < 7; i++)
+        printf("%d ", h[i]);
+    printf("\n");
+
+    // Error simulation
+    char opt;
+    printf("Simulate error? (y/n): ");
+    scanf(" %c", &opt);
+
+    if(opt == 'y' || opt == 'Y') {
+        int pos;
+        printf("Enter bit position (1-7): ");
+        scanf("%d", &pos);
+        h[pos-1] ^= 1;
+        printf("Code after error: ");
+        for(int i = 0; i < 7; i++)
+            printf("%d ", h[i]);
+        printf("\n");
+    }
+
+    // Error detection
+    int p1 = h[0] ^ h[2] ^ h[4] ^ h[6];
+    int p2 = h[1] ^ h[2] ^ h[5] ^ h[6];
+    int p4 = h[3] ^ h[4] ^ h[5] ^ h[6];
+
+    int err_pos = p4*4 + p2*2 + p1;
+
+    if(err_pos == 0)
+        printf("No error.\n");
+    else {
+        printf("Error at position %d.\n", err_pos);
+        h[err_pos-1] ^= 1;
+        printf("Corrected code: ");
+        for(int i = 0; i < 7; i++)
+            printf("%d ", h[i]);
+        printf("\n");
+    }
+
+    printf("Extracted data bits: %d %d %d %d\n", h[2], h[4], h[5], h[6]);
+    return 0;
+}
